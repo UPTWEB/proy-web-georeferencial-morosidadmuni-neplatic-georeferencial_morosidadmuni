@@ -1,0 +1,17 @@
+.env
+.venv/
+build/
+dist/
+*.spec
+*.zip
+
+__pycache__/
+*.py[cod]
+*$py.class
+
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+scratch/*.json
