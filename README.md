@@ -76,7 +76,7 @@ Asegúrate de que el servidor/VPS tenga acceso por puerto `5432` a dicha base de
 
 Para acceder al sistema, puedes utilizar el siguiente usuario de prueba:
 
-- **Usuario**: `notificador1`
+- **Usuario**: `notificador2`
 - **Contraseña**: `password`
 
 ## Endpoints Principales de la API
