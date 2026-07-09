@@ -1,0 +1,49 @@
+#!/usr/bin/env php
+<?php
+/**
+ * Artisan CLI para Neplatic Web
+ * Uso: php artisan [comando]
+ */
+
+require __DIR__ . '/vendor/autoload.php';
+
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
+$command = $argv[1] ?? 'help';
+
+switch ($command) {
+    case 'serve':
+        echo " Iniciando servidor en http://localhost:8080\n";
+        echo "Presiona Ctrl+C para detener\n\n";
+        exec("php -S localhost:8080 -t .");
+        break;
+    
+    case 'consumer:start':
+        echo " Iniciando Event Consumer...\n";
+        require __DIR__ . '/scripts/start-consumer.php';
+        break;
+    
+    case 'cache:clear':
+        echo " Limpiando caché Redis...\n";
+        $redis = new Predis\Client([
+            'host' => $_ENV['REDIS_HOST'],
+            'port' => $_ENV['REDIS_PORT'],
+        ]);
+        $keys = $redis->keys($_ENV['REDIS_PREFIX'] . '*');
+        foreach ($keys as $key) {
+            $redis->del([$key]);
+        }
+        echo " Caché limpiada. " . count($keys) . " keys eliminadas.\n";
+        break;
+    
+    case 'help':
+    default:
+        echo "Comandos disponibles:\n";
+        echo "  php artisan serve           - Inicia el servidor web\n";
+        echo "  php artisan consumer:start  - Inicia el consumidor de eventos\n";
+        echo "  php artisan cache:clear     - Limpia toda la caché de Redis\n";
+        break;
+}

@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: neplatic-web
+    ports:
+      - "8085:80"
+      - "8443:443"
+    environment:
+      - DB_HOST=178.238.228.92
+      - DB_PORT=5432
+      - DB_NAME=neplatic
+      - DB_USER=neplatic_readonly
+      - DB_PASS=Upt2026
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - redis
+    networks:
+      - neplatic-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: neplatic-redis
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes --requirepass Upt2026
+    networks:
+      - neplatic-network
+
+networks:
+  neplatic-network:
+    driver: bridge

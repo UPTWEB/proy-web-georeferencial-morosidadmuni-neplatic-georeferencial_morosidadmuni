@@ -1,0 +1,1 @@
+<?php require 'vendor/autoload.php'; $dotenv = Dotenv\Dotenv::createImmutable(__DIR__); $dotenv->load(); $db = Neplatic\Models\Database::getInstance(); $sql = 'SELECT * FROM neplatic.v_ruta_asignada WHERE id_usuario = :id AND fecha_ruta = :fecha'; $res = $db->fetchOne($sql, ['id'=>24, 'fecha'=>'2026-06-22']); echo json_encode($res); ?>

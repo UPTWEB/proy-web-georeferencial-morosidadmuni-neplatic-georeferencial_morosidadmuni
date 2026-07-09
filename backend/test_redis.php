@@ -1,0 +1,1 @@
+<?php require 'vendor/autoload.php'; $dotenv = Dotenv\Dotenv::createImmutable(__DIR__); $dotenv->load(); $redis = Neplatic\Services\RedisService::getInstance(); $redis->set('test_key', 'test_value'); echo 'OK'; ?>
